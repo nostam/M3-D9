@@ -16,13 +16,15 @@ const submitProduct = async () => {
   inputs.forEach((e) =>
     isNaN(e.value) ? alert("Fields are empty") : console.log("data is all set")
   );
+  (e[4].value < 0) ? alert("No negative price") : "";
   let newProduct = {
+    let setPrice = document.querySelector("#price").value
     // gathering the data from the form, field by field
     name: document.querySelector("#name").value,
     description: document.querySelector("#description").value,
     brand: document.querySelector("#brand").value,
     imageUrl: document.querySelector("#imageUrl").value,
-    price: document.querySelector("#price").value,
+    price: (!isNaN(parseFloat(setPrice)) && isFinite(setPrice)) ? setPrice : alert('Please enter a number in price field'),
   };
 
   try {
