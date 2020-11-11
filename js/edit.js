@@ -15,10 +15,16 @@ const isNumber = (n) => {
 const submitProduct = async () => {
   let inputs = [...document.querySelectorAll("input")];
   inputs.flat(inputs.push([...document.querySelectorAll("textarea")]));
-  console.log(inputs.filter((e) => isNaN(e.value)));
-  isNumber(inputs[3])
-    ? console.log("price is correct")
-    : console.log("incorrect price");
+  if (isNumber(inputs[3])) {
+    console.log("price is correct");
+  } else {
+    throw Error("incorrect price");
+  }
+  if (Boolean(inputs.filter((e) => e.value === "").length === 0)) {
+    console.log("data all set");
+  } else {
+    throw Error("empty field exists");
+  }
   let newProduct = {
     name: document.querySelector("#name").value,
     description: document.querySelector("#description").value,
