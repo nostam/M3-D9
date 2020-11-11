@@ -6,17 +6,17 @@ const myHeaders = new Headers({
 const addToShelf = (p) => {
   // console.log(p);
   let card = document.createElement("div");
-  card.classList.add("card", "mx-auto");
+  card.classList.add("card", "mx-auto", "my-5");
   card.style.width = "300px";
   card.setAttribute("id", p._id);
   card.innerHTML = `
     <img src="${p.imageUrl}" class="card-img-top">
     <div class="card-body">
-      <h5 class="card-title d-flex justify-content-between"><span>${p.brand}</span><span>${p.name}</span></h5>
+      <h5 class="card-title d-flex justify-content-between"><span>${p.name}</span><span>${p.brand}</span></h5>
       <p class="card-text">${p.description}</p>
     </div>
     <div class="card-footer d-flex justify-content-between align-items-center">
-      <span>$${p.price}</span>
+      <span>Price: $${p.price}</span>
       <a href="#" class="btn btn-warning">Buy</a>
     </div>`;
   return card;

@@ -1,6 +1,10 @@
 .card {
   box-shadow: 4px 4px 8px rgba(100, 100, 100, 0.2);
   border: 1px solid white;
+  margin: 2rem !important;
+}
+.card-title > span:last-of-type {
+  color: #3c3c3c;
 }
 .card:hover {
   border: 1px solid rgba(100, 100, 255, 0.75);
@@ -9,4 +13,10 @@
   object-fit: cover;
   width: 100%;
   height: 250px;
+}
+.card-text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
