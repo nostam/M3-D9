@@ -38,10 +38,10 @@ const search = (payload, criteria = "name") => {
       for (let card of cards) {
         card.classList.remove("searchMatched");
       }
-      console.log(
-        result,
-        cards.map((e) => e.className)
-      );
+      // console.log(
+      //   result,
+      //   cards.map((e) => e.className)
+      // );
       for (let card of cards) {
         for (let filtered of result) {
           if (filtered["_id"] === card["id"]) {
@@ -61,11 +61,30 @@ const search = (payload, criteria = "name") => {
     }
   });
 };
+let num1 = 1;
+let num2 = -1;
+const sortIndex = function (payload, option) {
+  let shelf = document.querySelector("#shelf");
+  let itemsArr = Array.from(shelf.children);
+
+  itemsArr
+    .sort(function (a, b) {
+      return a.innerText.substr(0, 1).toLowerCase() >
+        b.innerText.substr(0, 1).toLowerCase()
+        ? num1
+        : num2;
+    })
+    .map((list) => shelf.append(list));
+
+  let tmp = num1;
+  num1 = num2;
+  num2 = tmp;
+};
 
 window.onload = async () => {
   const url = "https://striveschool-api.herokuapp.com/api/product/";
   let shelf = document.querySelector("#shelf");
-
+  let sortBtn = document.querySelector(".btn-outline-secondary");
   try {
     let response = await fetch(url, {
       method: "GET",
@@ -74,6 +93,8 @@ window.onload = async () => {
 
     let payload = await response.json();
     if (payload.length > 0) {
+      document.getElementById("func").classList.toggle("d-none");
+      sortBtn.addEventListener("click", sortIndex);
       payload.forEach((p) => shelf.appendChild(addToShelf(p)));
       search(payload);
     } else {
