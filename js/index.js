@@ -21,6 +21,46 @@ const addToShelf = (p) => {
     </div>`;
   return card;
 };
+const search = (payload, criteria = "name") => {
+  let input = document.querySelector(".form-control");
+  let result = [];
+  let cards = [...document.getElementsByClassName("card")];
+  input.addEventListener("input", function (e) {
+    if (input.value.length > 0) {
+      // console.log("searching", input.value);
+      // console.log(payload);
+      result = payload.filter((obj) =>
+        obj[criteria]
+          .valueOf()
+          .toLowerCase()
+          .includes(input.value.toLowerCase())
+      );
+      for (let card of cards) {
+        card.classList.remove("searchMatched");
+      }
+      console.log(
+        result,
+        cards.map((e) => e.className)
+      );
+      for (let card of cards) {
+        for (let filtered of result) {
+          if (filtered["_id"] === card["id"]) {
+            card.classList.add("searchMatched");
+          }
+        }
+        if (card.className.match("searchMatched")) {
+          card.classList.remove("d-none");
+        } else {
+          card.classList.add("d-none");
+        }
+      }
+    } else {
+      for (let card of cards) {
+        card.classList.remove("d-none"); // from searching back to whole index
+      }
+    }
+  });
+};
 
 window.onload = async () => {
   const url = "https://striveschool-api.herokuapp.com/api/product/";
@@ -35,6 +75,7 @@ window.onload = async () => {
     let payload = await response.json();
     if (payload.length > 0) {
       payload.forEach((p) => shelf.appendChild(addToShelf(p)));
+      search(payload);
     } else {
       shelf.innerHTML = "<h2>Sorry it's out of stock at the moment</h2>";
     }
