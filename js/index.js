@@ -4,7 +4,7 @@ const myHeaders = new Headers({
 });
 
 const addToShelf = (p) => {
-  console.log(p);
+  // console.log(p);
   let card = document.createElement("div");
   card.classList.add("card", "mx-auto");
   card.style.width = "300px";
@@ -33,18 +33,6 @@ window.onload = async () => {
     });
 
     let payload = await response.json();
-    // console.log(payload);
-    // if (events.length > 0) {
-    //   events.forEach((e) => {
-    //     let listItem = document.createElement("li");
-    //     listItem.classList.add(
-    //       "list-group-item",
-    //       "d-flex",
-    //       "justify-content-between"
-    //     );
-    //     listItem.innerHTML = `<span>${e.name}</span><span>${e.price}$</span>`;
-    //     shelf.appendChild(listItem);
-    //   });
     if (payload.length > 0) {
       payload.forEach((p) => shelf.appendChild(addToShelf(p)));
     } else {

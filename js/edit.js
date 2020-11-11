@@ -9,22 +9,22 @@ const handleSubmit = (e) => {
   e.preventDefault(); // preventing the default browser event handling
   submitProduct();
 };
-
+const isNumber = (n) => {
+  return !isNaN(parseFloat(n)) && isFinite(n) && n > 0;
+};
 const submitProduct = async () => {
   let inputs = [...document.querySelectorAll("input")];
   inputs.flat(inputs.push([...document.querySelectorAll("textarea")]));
-  inputs.forEach((e) =>
-    isNaN(e.value) ? alert("Fields are empty") : console.log("data is all set")
-  );
-  (e[4].value < 0) ? alert("No negative price") : "";
+  console.log(inputs.filter((e) => isNaN(e.value)));
+  isNumber(inputs[3])
+    ? console.log("price is correct")
+    : console.log("incorrect price");
   let newProduct = {
-    let setPrice = document.querySelector("#price").value
-    // gathering the data from the form, field by field
     name: document.querySelector("#name").value,
     description: document.querySelector("#description").value,
     brand: document.querySelector("#brand").value,
     imageUrl: document.querySelector("#imageUrl").value,
-    price: (!isNaN(parseFloat(setPrice)) && isFinite(setPrice)) ? setPrice : alert('Please enter a number in price field'),
+    price: document.querySelector("#price").value,
   };
 
   try {
