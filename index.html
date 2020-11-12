@@ -50,7 +50,10 @@
       <h2 class="my-5">Products</h2>
       <div class="px-5 row d-flex justify-content-between d-none" id="func">
         <div>
-          <button class="btn btn-outline-secondary input-group-append">
+          <button
+            class="btn btn-outline-secondary input-group-append"
+            id="sortBtn"
+          >
             Sort
           </button>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -67,6 +70,18 @@
           aria-label="search"
           aria-describedby="basic-search"
         />
+      </div>
+      <div
+        class="text-center mt-5 d-none"
+        id="contentLoadingSpinner"
+        aria-hidden="true"
+      >
+        <p>Loading...</p>
+        <div
+          class="spinner-border"
+          role="status"
+          style="transform: scale(2)"
+        ></div>
       </div>
       <div class="row" id="cart"></div>
       <div class="row" id="shelf"></div>
