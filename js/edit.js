@@ -23,9 +23,7 @@ const submitProduct = async () => {
   // input validation
   let inputs = [...document.querySelectorAll("input")];
   // inputs.flat(inputs.push([...document.querySelectorAll("textarea")]));
-  if (isPositiveNumber(inputs[3])) {
-    console.log("price is correct");
-  } else {
+  if (!isPositiveNumber(inputs[3])) {
     throw Error("incorrect price");
   }
   // if (Boolean(inputs.filter((e) => e.value === "").length === 0)) {
@@ -64,5 +62,13 @@ const submitProduct = async () => {
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+window.onload = () => {
+  let id = new URLSearchParams(document.location.search).get("id");
+
+  if (id) {
+    //fetch data here
   }
 };

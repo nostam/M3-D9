@@ -70,12 +70,12 @@ const sortIndex = function (payload, option) {
   let itemsArr = Array.from(shelf.children);
 
   itemsArr
-    .sort(function (a, b) {
-      return a.innerText.substr(0, 1).toLowerCase() >
-        b.innerText.substr(0, 1).toLowerCase()
+    .sort((a, b) =>
+      a.innerText.substr(0, 1).toLowerCase() >
+      b.innerText.substr(0, 1).toLowerCase()
         ? num1
-        : num2;
-    })
+        : num2
+    )
     .map((list) => shelf.append(list));
 
   let tmp = num1;
@@ -97,6 +97,9 @@ window.onload = async () => {
 
     let payload = await response.json();
     if (payload.length > 0) {
+      payload.sort((a, b) =>
+        a.updatedAt > b.updatedAt ? -1 : a.updatedAt < b.updatedAt ? 1 : 0
+      );
       contentLoadingSpinner.classList.toggle("d-none");
       document.getElementById("func").classList.toggle("d-none");
       sortBtn.addEventListener("click", sortIndex);
