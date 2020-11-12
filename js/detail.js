@@ -15,6 +15,8 @@ const detailsInfo = (product) => {
 };
 
 window.onload = async () => {
+  let contentLoadingSpinner = document.getElementById("contentLoadingSpinner");
+  contentLoadingSpinner.classList.toggle("d-none");
   let urlParams = new URLSearchParams(window.location.search); // creating a new instance of the URLSearchParams object
   id = urlParams.get("id"); // saving the id retrieved from the url address bar
   try {
@@ -26,6 +28,7 @@ window.onload = async () => {
     let product = products.filter((p) => p["_id"] === id)[0];
 
     if (product) {
+      contentLoadingSpinner.classList.toggle("d-none");
       document.getElementById("details").classList.toggle("d-none");
       document.getElementById("productImg").src = product.imageUrl;
       document.getElementById("details-info").innerHTML += detailsInfo(product);
@@ -33,6 +36,7 @@ window.onload = async () => {
       throw Error("ID does not match or payload is empty");
     }
   } catch (error) {
+    contentLoadingSpinner.classList.toggle("d-none");
     console.log(error);
     alert("Something went wrong, see console log for details");
   }
