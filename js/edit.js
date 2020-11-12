@@ -75,7 +75,10 @@ const submitProduct = async () => {
       alert("Something went wrong!");
     }
   } catch (error) {
-    console.log(error);
+    let danger = document.createElement("div");
+    danger.classList.add("alert", "alert-danger");
+    danger.innerText = error;
+    document.getElementsByTagName("h1").appendChild(danger);
   }
 };
 
@@ -102,8 +105,10 @@ window.onload = async () => {
         throw Error("ID does not match");
       }
     } catch {
-      console.log(error);
-      alert("Something went wrong, see console log for details");
+      let danger = document.createElement("div");
+      danger.classList.add("alert", "alert-danger");
+      danger.innerText = error;
+      document.getElementsByTagName("h1").appendChild(danger);
     }
   }
 };
