@@ -18,15 +18,15 @@ const isPositiveNumber = (n) => {
 const submitProduct = async () => {
   let spinner = document.querySelector("#loadingSpinner");
   spinner.classList.toggle("d-none"); // showing the spinner
-  document.getElementById("submitBtn").value = "Submitting...";
+  document.querySelector("#submitBtn span:last-of-type").innerText =
+    "Submitting...";
 
   // input validation
-  let inputs = [...document.querySelectorAll("input")];
+  // let inputs = [...document.querySelectorAll("input")];
   // // inputs.flat(inputs.push([...document.querySelectorAll("textarea")]));
-  if (inputs[3] < 0) {
-    throw Error("incorrect price");
-    break;
-  }
+  // if (inputs[3] < 0) {
+  //   throw Error("incorrect price");
+  // }
   // if (Boolean(inputs.filter((e) => e.value === "").length === 0)) {
   //   console.log("data all set");
   // } else {
@@ -60,7 +60,8 @@ const submitProduct = async () => {
     }
     if (response.ok) {
       spinner.classList.toggle("d-none");
-      document.getElementById("submitBtn").value = "Success!";
+      document.querySelector("#submitBtn span:last-of-type").innerText =
+        "Success!";
       alert(
         `Product ${
           id ? "updated" : "created"
@@ -69,7 +70,8 @@ const submitProduct = async () => {
       location.assign("index.html");
     } else {
       spinner.classList.toggle("d-none");
-      document.getElementById("submitBtn").innerText = "Submit Product";
+      document.querySelector("#submitBtn span:last-of-type").innerText =
+        "Submit Product";
       alert("Something went wrong!");
     }
   } catch (error) {
@@ -89,7 +91,8 @@ window.onload = async () => {
       let payload = await response.json();
       if (response.ok) {
         document.querySelector(".text-center.mt-5").innerText = "Edit Product";
-        document.querySelector("#submitBtn button").value = "Edit Product";
+        document.querySelector("#submitBtn span:last-of-type").innerText =
+          "Edit Product";
         document.querySelector("#name").value = payload.name;
         document.querySelector("#description").value = payload.description;
         document.querySelector("#brand").value = payload.brand;
