@@ -20,23 +20,24 @@ window.onload = async () => {
   let urlParams = new URLSearchParams(window.location.search); // creating a new instance of the URLSearchParams object
   id = urlParams.get("id"); // saving the id retrieved from the url address bar
   try {
-    let response = await fetch(url, {
+    let response = await fetch(url + id, {
       method: "GET",
       headers: myHeaders,
     });
-    let products = await response.json();
-    let product = products.filter((p) => p["_id"] === id)[0];
-
+    let product = await response.json();
     if (product) {
       contentLoadingSpinner.classList.toggle("d-none");
       document.getElementById("details").classList.toggle("d-none");
       document.getElementById("productImg").src = product.imageUrl;
       document.getElementById("details-info").innerHTML += detailsInfo(product);
+      document.getElementsByClassName(
+        "modal-body"
+      )[0].innerHTML = `Are you sure you want to delete <strong>${product.name} from the shelf?</strong>`;
     } else {
+      contentLoadingSpinner.classList.toggle("d-none");
       throw Error("ID does not match or payload is empty");
     }
   } catch (error) {
-    contentLoadingSpinner.classList.toggle("d-none");
     console.log(error);
     alert("Something went wrong, see console log for details");
   }
@@ -49,8 +50,7 @@ const handleDelete = async () => {
       headers: myHeaders,
     });
     if (response.ok) {
-      //modal confirm
-      alert("Product deleted successfully");
+      alert("Product deleted successfully, redirecting back to homepage...");
       location.assign("index.html");
     } else {
       alert("Something went wrong!");

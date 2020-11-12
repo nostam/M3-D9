@@ -39,17 +39,14 @@ const submitProduct = async () => {
     imageUrl: document.querySelector("#imageUrl").value,
     price: document.querySelector("#price").value,
   };
-
   try {
     let response;
-
     response = await fetch(url, {
       // our POST request is made with the fetch method as well!
       method: "POST", // declaring the CRUD method
       body: JSON.stringify(newProduct), // we need to stringify the JS object in order to send it
       headers: myHeaders,
     });
-
     if (response.ok) {
       spinner.classList.toggle("d-none");
       document.getElementById("submitBtn").innerText = "Success!";
@@ -65,10 +62,20 @@ const submitProduct = async () => {
   }
 };
 
-window.onload = () => {
-  let id = new URLSearchParams(document.location.search).get("id");
-
+window.onload = async () => {
+  let urlParmas = new URLSearchParams(document.location.search);
+  let id = urlParmas.get("id");
   if (id) {
-    //fetch data here
+    try {
+      let response = await fetch(url + id, {
+        method: "GET",
+        headers: myHeaders,
+      });
+      let payload = await response.json();
+      console.log(payload);
+    } catch {
+      console.log(error);
+      alert("Something went wrong, see console log for details");
+    }
   }
 };

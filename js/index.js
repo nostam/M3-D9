@@ -110,6 +110,7 @@ window.onload = async () => {
       shelf.innerHTML = "<h2>Sorry it's out of stock at the moment</h2>";
     }
   } catch (error) {
+    alert("Something went wrong, see console log for details");
     console.log(error);
   }
 };
