@@ -18,39 +18,54 @@ const isPositiveNumber = (n) => {
 const submitProduct = async () => {
   let spinner = document.querySelector("#loadingSpinner");
   spinner.classList.toggle("d-none"); // showing the spinner
-  document.getElementById("submitBtn").innerText = "Submitting...";
+  document.getElementById("submitBtn").value = "Submitting...";
 
   // input validation
   let inputs = [...document.querySelectorAll("input")];
-  // inputs.flat(inputs.push([...document.querySelectorAll("textarea")]));
-  if (!isPositiveNumber(inputs[3])) {
+  // // inputs.flat(inputs.push([...document.querySelectorAll("textarea")]));
+  if (inputs[3] < 0) {
     throw Error("incorrect price");
+    break;
   }
   // if (Boolean(inputs.filter((e) => e.value === "").length === 0)) {
   //   console.log("data all set");
   // } else {
   //   throw Error("empty field exists");
   // } //replaced with required tag
+  let urlParmas = new URLSearchParams(document.location.search);
+  let id = urlParmas.get("id");
 
-  let newProduct = {
+  let productInfo = {
     name: document.querySelector("#name").value,
     description: document.querySelector("#description").value,
     brand: document.querySelector("#brand").value,
     imageUrl: document.querySelector("#imageUrl").value,
     price: document.querySelector("#price").value,
   };
+
   try {
     let response;
-    response = await fetch(url, {
-      // our POST request is made with the fetch method as well!
-      method: "POST", // declaring the CRUD method
-      body: JSON.stringify(newProduct), // we need to stringify the JS object in order to send it
-      headers: myHeaders,
-    });
+    if (id) {
+      response = await fetch(url + id, {
+        method: "PUT",
+        body: JSON.stringify(productInfo),
+        headers: myHeaders,
+      });
+    } else {
+      response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(productInfo),
+        headers: myHeaders,
+      });
+    }
     if (response.ok) {
       spinner.classList.toggle("d-none");
-      document.getElementById("submitBtn").innerText = "Success!";
-      alert("Product created successfully, redirecting back to homepage...");
+      document.getElementById("submitBtn").value = "Success!";
+      alert(
+        `Product ${
+          id ? "updated" : "created"
+        } successfully, redirecting back to homepage...`
+      );
       location.assign("index.html");
     } else {
       spinner.classList.toggle("d-none");
@@ -72,7 +87,17 @@ window.onload = async () => {
         headers: myHeaders,
       });
       let payload = await response.json();
-      console.log(payload);
+      if (response.ok) {
+        document.querySelector(".text-center.mt-5").innerText = "Edit Product";
+        document.querySelector("#submitBtn button").value = "Edit Product";
+        document.querySelector("#name").value = payload.name;
+        document.querySelector("#description").value = payload.description;
+        document.querySelector("#brand").value = payload.brand;
+        document.querySelector("#imageUrl").value = payload.imageUrl;
+        document.querySelector("#price").value = payload.price;
+      } else {
+        throw Error("ID does not match");
+      }
     } catch {
       console.log(error);
       alert("Something went wrong, see console log for details");

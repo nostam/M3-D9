@@ -25,7 +25,7 @@ window.onload = async () => {
       headers: myHeaders,
     });
     let product = await response.json();
-    if (product) {
+    if (response.ok) {
       contentLoadingSpinner.classList.toggle("d-none");
       document.getElementById("details").classList.toggle("d-none");
       document.getElementById("productImg").src = product.imageUrl;
@@ -35,7 +35,7 @@ window.onload = async () => {
       )[0].innerHTML = `Are you sure you want to delete <strong>${product.name} from the shelf?</strong>`;
     } else {
       contentLoadingSpinner.classList.toggle("d-none");
-      throw Error("ID does not match or payload is empty");
+      throw Error("ID does not match");
     }
   } catch (error) {
     console.log(error);
